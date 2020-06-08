@@ -11,7 +11,7 @@ defmodule Pokemon.Data.Moves do
     power
     accuracy
   )a
-  @time NaiveDateTime.truncate(NaiveDateTime.utc_now, :microsecond)
+  @time NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
 
   schema "moves" do
     field(:name, :string)
@@ -50,5 +50,4 @@ defmodule Pokemon.Data.Moves do
     string_map
     |> Enum.map(fn x -> %{name: x["name"], accuracy: x["accuracy"], power: x["power"], inserted_at: @time, updated_at: @time} end)
   end
-
 end

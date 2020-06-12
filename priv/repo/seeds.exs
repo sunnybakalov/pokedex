@@ -18,7 +18,7 @@ defmodule Seeds do
 
   alias Pokemon.Repo
 
-  @time NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
+  @time NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
   @moves_filepath "moves.json"
 
   Repo.insert_all(Types, [
@@ -119,10 +119,22 @@ defmodule Seeds do
       inserted_at: @time,
       updated_at: @time
     },
-    %{name: "Ghost", immunes: ["Normal"], weaknesses: ["Dark"], strengths: ["Psychic", "Ghost"], inserted_at: @time,
-    updated_at: @time},
-    %{name: "Dragon", immunes: ["Fairy"], weaknesses: ["Steel"], strengths: ["Dragon"], inserted_at: @time,
-    updated_at: @time},
+    %{
+      name: "Ghost",
+      immunes: ["Normal"],
+      weaknesses: ["Dark"],
+      strengths: ["Psychic", "Ghost"],
+      inserted_at: @time,
+      updated_at: @time
+    },
+    %{
+      name: "Dragon",
+      immunes: ["Fairy"],
+      weaknesses: ["Steel"],
+      strengths: ["Dragon"],
+      inserted_at: @time,
+      updated_at: @time
+    },
     %{
       name: "Dark",
       immunes: [],

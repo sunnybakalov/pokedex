@@ -10,17 +10,29 @@ defmodule Pokemon do
   alias Pokemon.PokemonApi.Client
   require Logger
 
+  @droppable_keys [
+    :abilities,
+    :base_experience,
+    :game_indices,
+    :held_items,
+    :is_default,
+    :location_area_encounters,
+    :order,
+    :stats
+  ]
+
   def search_by_name(name) do
     name
+    |> String.downcase()
     |> Client.pokemon_name_search()
-    |> process_response()
   end
 
   def process_response(res) do
     case res do
       {:ok, body} ->
         body
-        |> keys_to_atoms()
+
+      # |> keys_to_atoms()
 
       {:error, err} ->
         Logger.warn(fn -> "[#{__MODULE__}] Pokemon API call failed: #{inspect(err)}" end)
@@ -28,7 +40,8 @@ defmodule Pokemon do
   end
 
   def create_poke_map(poke_map \\ %{}) do
-    #
+    poke_map
+    |> Map.drop(@droppable_keys)
   end
 
   def keys_to_atoms(string_key_map) when is_map(string_key_map) do

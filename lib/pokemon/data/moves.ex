@@ -11,7 +11,7 @@ defmodule Pokemon.Data.Moves do
     power
     accuracy
   )a
-  @time NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
+  @time NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
 
   schema "moves" do
     field(:name, :string)
@@ -34,7 +34,7 @@ defmodule Pokemon.Data.Moves do
   # run this function to get the JSON in a format that is ready to insert
   def get_json(file_path) do
     with {:ok, body} <- File.read(file_path),
-    {:ok, json} <- Poison.decode(body) do
+         {:ok, json} <- Poison.decode(body) do
       json
       |> moves_mapper()
       |> string_map_to_atom_map()
@@ -43,11 +43,21 @@ defmodule Pokemon.Data.Moves do
 
   def moves_mapper(list_of_move_maps) do
     list_of_move_maps
-    |> Enum.map(fn x -> %{"name" => x["ename"], "power" => x["power"], "accuracy" => x["accuracy"]} end)
+    |> Enum.map(fn x ->
+      %{"name" => x["ename"], "power" => x["power"], "accuracy" => x["accuracy"]}
+    end)
   end
 
   def string_map_to_atom_map(string_map) do
     string_map
-    |> Enum.map(fn x -> %{name: x["name"], accuracy: x["accuracy"], power: x["power"], inserted_at: @time, updated_at: @time} end)
+    |> Enum.map(fn x ->
+      %{
+        name: x["name"],
+        accuracy: x["accuracy"],
+        power: x["power"],
+        inserted_at: @time,
+        updated_at: @time
+      }
+    end)
   end
 end

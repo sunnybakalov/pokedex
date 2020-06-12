@@ -19,6 +19,11 @@ defmodule Pokemon.Data.Poke do
     weight
     height
   )a
+  @required_fields ~w(
+    name
+    number
+    species
+  )a
 
   schema "pokemon" do
     field(:name)
@@ -61,5 +66,7 @@ defmodule Pokemon.Data.Poke do
   def changeset(pokemon, params) do
     pokemon
     |> Changeset.cast(params, @fields)
+    |> Changeset.validate_required(@required_fields)
+    |> Changeset.unique_constraint(:number)
   end
 end

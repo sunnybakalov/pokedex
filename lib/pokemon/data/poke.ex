@@ -11,7 +11,6 @@ defmodule Pokemon.Data.Poke do
     name
     number
     abilities
-    forms
     moves
     species
     sprites
@@ -29,7 +28,6 @@ defmodule Pokemon.Data.Poke do
     field(:name)
     field(:number)
     field(:abilities)
-    field(:forms)
     field(:moves)
     field(:species)
     field(:sprites)
@@ -57,7 +55,7 @@ defmodule Pokemon.Data.Poke do
     from(p in query, where: p.name == ^name)
   end
 
-  def create(attrs) do
+  def create(attrs \\ %{}) do
     %__MODULE__{}
     |> changeset(attrs)
     |> Repo.insert(on_conflict: :nothing)

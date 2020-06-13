@@ -13,6 +13,7 @@ defmodule Pokemon do
   @droppable_keys [
     :abilities,
     :base_experience,
+    :forms,
     :game_indices,
     :held_items,
     :is_default,
@@ -20,6 +21,22 @@ defmodule Pokemon do
     :order,
     :stats
   ]
+
+  def formatted_search(name) do
+    name
+    |> search_by_name()
+    |> process_response()
+    |> keys_to_atoms()
+    |> create_poke_map()
+  end
+
+  def get_moves(name) do
+    pokemon = formatted_search(name)
+
+    pokemon.moves
+    |> Enum.map(fn x -> x.move.name end)
+    |> Enum.sort()
+  end
 
   def search_by_name(name) do
     name

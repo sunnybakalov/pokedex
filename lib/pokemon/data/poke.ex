@@ -27,9 +27,11 @@ defmodule Pokemon.Data.Poke do
     field(:number, :integer)
     field(:moves, {:array, :string})
     field(:species, :string)
-    field(:types, :string)
+    field(:types, {:array, :string})
     field(:weight, :integer)
     field(:height, :integer)
+
+    timestamps()
   end
 
   def by_name(name) do

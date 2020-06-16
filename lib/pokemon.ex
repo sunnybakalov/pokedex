@@ -29,6 +29,8 @@ defmodule Pokemon do
     |> process_response()
     |> keys_to_atoms()
     |> create_poke_map()
+    |> format_pokemon_map()
+    |> convert_id_to_number()
   end
 
   def get_moves(name) do
@@ -61,7 +63,7 @@ defmodule Pokemon do
         %{
           moves: list_of_moves,
           types: list_of_types,
-          species: species_map
+          species: species_map,
         } = pokemon \\ %{}
       ) do
     moves = Enum.map(list_of_moves, fn x -> x.move.name end)
@@ -69,6 +71,12 @@ defmodule Pokemon do
     types = Enum.map(list_of_types, fn x -> x.type.name end)
 
     %{pokemon | moves: moves, types: types, species: species_map.name}
+  end
+
+  def convert_id_to_number(%{id: id} = pokemon) do
+    pokemon
+    |> Map.delete(:id)
+    |> Map.put(:number, id)
   end
 
   def create_poke_map(poke_map \\ %{}) do

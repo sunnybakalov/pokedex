@@ -10,7 +10,6 @@ defmodule Pokemon.Data.Poke do
   @fields ~w(
     name
     number
-    abilities
     moves
     species
     sprites
@@ -25,15 +24,14 @@ defmodule Pokemon.Data.Poke do
   )a
 
   schema "pokemon" do
-    field(:name)
-    field(:number)
-    field(:abilities)
-    field(:moves)
-    field(:species)
-    field(:sprites)
-    field(:types)
-    field(:weight)
-    field(:height)
+    field(:name, :string)
+    field(:number, :integer)
+    field(:moves, {:array, :string})
+    field(:species, :string)
+    field(:sprites, {:array, :string})
+    field(:types, :string)
+    field(:weight, :integer)
+    field(:height, :integer)
   end
 
   def by_name(name) do

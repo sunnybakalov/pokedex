@@ -2,7 +2,6 @@ defmodule Pokemon.PokemonApi.Client do
   @moduledoc false
   require Logger
   @pokemon_api_host "https://pokeapi.co/api/v2/pokemon/"
-  @fields_from_api "abilities,forms,moves,species,sprites,stats,types"
 
   def pokemon_name_search(pokemon_name) do
     HTTPoison.get("#{@pokemon_api_host}#{pokemon_name}")

@@ -7,7 +7,6 @@ defmodule Pokemon.Repo.Migrations.CreatePokemonTable do
       add :number, :integer, null: false
       add :moves, {:array, :string}
       add :species, :string
-      add :sprites, {:array, :string}
       add :types, :string
       add :weight, :integer
       add :height, :integer

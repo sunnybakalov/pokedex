@@ -19,6 +19,7 @@ defmodule Pokemon do
     :is_default,
     :location_area_encounters,
     :order,
+    :sprites,
     :stats
   ]
 
@@ -54,6 +55,20 @@ defmodule Pokemon do
       {:error, err} ->
         Logger.warn(fn -> "[#{__MODULE__}] Pokemon API call failed: #{inspect(err)}" end)
     end
+  end
+
+  def format_pokemon_map(
+        %{
+          moves: list_of_moves,
+          types: list_of_types,
+          species: species_map
+        } = pokemon \\ %{}
+      ) do
+    moves = Enum.map(list_of_moves, fn x -> x.move.name end)
+
+    types = Enum.map(list_of_types, fn x -> x.type.name end)
+
+    %{pokemon | moves: moves, types: types, species: species_map.name}
   end
 
   def create_poke_map(poke_map \\ %{}) do

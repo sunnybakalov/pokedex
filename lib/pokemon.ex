@@ -7,7 +7,7 @@ defmodule Pokemon do
   if it comes from the database, an external API or others.
   """
 
-  alias Pokemon.PokemonApi.Client
+  alias Pokemon.PokemonApi.{Client, PokeCache}
   require Logger
 
   @droppable_keys [
@@ -23,6 +23,10 @@ defmodule Pokemon do
     :stats
   ]
 
+  def search(name) do
+    PokeCache.get_pokemon_details(name)
+  end
+
   def formatted_search(name) do
     name
     |> search_by_name()
@@ -33,6 +37,12 @@ defmodule Pokemon do
     |> convert_id_to_number()
   end
 
+  def search_by_name(name) do
+    name
+    |> String.downcase()
+    |> Client.pokemon_name_search()
+  end
+
   def get_moves(name) do
     pokemon = formatted_search(name)
 
@@ -41,17 +51,10 @@ defmodule Pokemon do
     |> Enum.sort()
   end
 
-  def search_by_name(name) do
-    name
-    |> String.downcase()
-    |> Client.pokemon_name_search()
-  end
-
   def process_response(res) do
     case res do
       {:ok, body} ->
         {:ok, body}
-        # |> keys_to_atoms()
 
       {:error, err} ->
         Logger.warn(fn -> "[#{__MODULE__}] Pokemon API call failed: #{inspect(err)}" end)

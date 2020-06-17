@@ -39,7 +39,6 @@ defmodule Pokemon.PokemonApi.PokeCache do
   def get_cached(name) do
     if exists?(name) do
       Poke.by_name(name)
-      # returns {:ok, pokemon_struct}
     else
       {:error, :not_found}
     end

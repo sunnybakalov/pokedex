@@ -15,8 +15,14 @@ defmodule Pokemon.PokemonApi.PokeCache do
   def get_and_cache(name) do
     with {:ok, pokemon} <- Pokemon.search_by_name(name),
          {:ok, response} <- Pokemon.process_response({:ok, pokemon}) do
-      response
-      |> Pokemon.keys_to_atoms()
+      poke_map =
+        response
+        |> Pokemon.keys_to_atoms()
+        |> Pokemon.create_poke_map()
+        |> Pokemon.format_pokemon_map()
+        |> Pokemon.convert_id_to_number()
+
+      cache_pokemon(name, poke_map)
     else
       {:error, err} ->
         err
@@ -25,14 +31,15 @@ defmodule Pokemon.PokemonApi.PokeCache do
 
   def cache_pokemon(name, pokemon) do
     case Poke.by_name(name) do
-      nil -> Poke.create(pokemon)
-      found_pokemon -> Logger.warn(fn -> "[#{__MODULE__}] #{found_pokemon} already exists!" end)
+      {:ok, found_pokemon} -> {:ok, found_pokemon}
+      {:error, :not_found} -> Poke.create(pokemon)
     end
   end
 
   def get_cached(name) do
     if exists?(name) do
-      {:ok, Poke.by_name(name)}
+      Poke.by_name(name)
+      # returns {:ok, pokemon_struct}
     else
       {:error, :not_found}
     end

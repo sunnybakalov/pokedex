@@ -50,9 +50,8 @@ defmodule Pokemon do
   def process_response(res) do
     case res do
       {:ok, body} ->
-        body
-
-      # |> keys_to_atoms()
+        {:ok, body}
+        # |> keys_to_atoms()
 
       {:error, err} ->
         Logger.warn(fn -> "[#{__MODULE__}] Pokemon API call failed: #{inspect(err)}" end)

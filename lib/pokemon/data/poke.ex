@@ -40,12 +40,12 @@ defmodule Pokemon.Data.Poke do
       |> where([p], p.name == ^name)
       |> Repo.one()
 
-    case query do
-      nil ->
-        {:error, :not_found}
+      case query do
+        nil ->
+          {:error, :not_found}
 
-      pokemon ->
-        {:ok, pokemon}
+        pokemon ->
+          {:ok, pokemon}
     end
   end
 

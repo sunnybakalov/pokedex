@@ -22,7 +22,7 @@ defmodule PokemonWeb.Router do
   scope "/", PokemonWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", PokeController, :index
   end
 
   # Other scopes may use custom stacks.

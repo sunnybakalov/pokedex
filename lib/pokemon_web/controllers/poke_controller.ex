@@ -2,9 +2,16 @@ defmodule PokemonWeb.PokeController do
   use PokemonWeb, :controller
 
   def search(conn, %{"name" => name}) do
-    require IEx;IEx.pry()
-    response = Pokemon.search_by_name(name)
-
-    send_resp(conn, 200, Poison.encode!(response))
+    case Pokemon.search(name) do
+      {:ok, pokemon} ->
+        send_resp(conn, 200, Poison.encode!(pokemon))
+      {:error, err} ->
+        conn
+        |> put_status(400)
+        |> json(%{
+          message: "UNABLE TO GET POKEMON",
+          error: err
+        })
+    end
   end
 end

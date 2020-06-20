@@ -46,7 +46,8 @@ defmodule Pokemon.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.3.0", override: true},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 

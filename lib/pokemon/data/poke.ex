@@ -36,6 +36,11 @@ defmodule Pokemon.Data.Poke do
     timestamps()
   end
 
+  def get_all() do
+    __MODULE__
+    |> Repo.all()
+  end
+
   def by_name(name) do
     query =
       __MODULE__

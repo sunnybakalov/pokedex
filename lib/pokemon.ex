@@ -26,6 +26,15 @@ defmodule Pokemon do
     PokeCache.get_pokemon_details(name)
   end
 
+  # running this function will fill your entire database with all current pokemon
+  def get_all_pokemon() do
+    with {:ok, pokemon_json} <- File.read("pokemon_names.json"),
+        {:ok, pokemon_names} <- Poison.decode(pokemon_json) do
+          pokemon_names
+          |> Enum.map(fn name -> search(name)end)
+    end
+  end
+
   def formatted_search(name) do
     name
     |> search_by_name()

@@ -1,6 +1,8 @@
 defmodule PokemonWeb.PokeController do
   use PokemonWeb, :controller
 
+  alias Pokemon.Data.Poke
+
   def search(conn, %{"name" => name}) do
     case Pokemon.search(name) do
       {:ok, pokemon} ->
@@ -13,5 +15,11 @@ defmodule PokemonWeb.PokeController do
           error: err
         })
     end
+  end
+
+  def get_all(conn, _params) do
+    pokemon = Poke.get_all()
+
+    send_resp(conn, 200, Poison.encode!(pokemon))
   end
 end

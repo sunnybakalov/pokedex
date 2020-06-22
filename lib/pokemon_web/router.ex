@@ -17,7 +17,8 @@ defmodule PokemonWeb.Router do
   scope "/api", PokemonWeb do
     pipe_through(:api)
 
-    get("/get-pokemon", PokeController, :search)
+    get("/search-pokemon", PokeController, :search)
+    get("/fetch-all", PokeController, :get_all)
   end
 
   scope "/", PokemonWeb do

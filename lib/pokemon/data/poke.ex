@@ -12,6 +12,7 @@ defmodule Pokemon.Data.Poke do
     number
     moves
     species
+    sprites
     types
     weight
     height
@@ -27,6 +28,7 @@ defmodule Pokemon.Data.Poke do
     field(:number, :integer)
     field(:moves, {:array, :string})
     field(:species, :string)
+    field(:sprites, {:map, :string})
     field(:types, {:array, :string})
     field(:weight, :integer)
     field(:height, :integer)

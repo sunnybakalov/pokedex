@@ -19,7 +19,6 @@ defmodule Pokemon do
     :is_default,
     :location_area_encounters,
     :order,
-    :sprites,
     :stats
   ]
 
@@ -85,6 +84,8 @@ defmodule Pokemon do
     poke_map
     |> Map.drop(@droppable_keys)
   end
+
+  def keys_to_atoms({:ok, pokemon}), do: keys_to_atoms(pokemon)
 
   def keys_to_atoms(string_key_map) when is_map(string_key_map) do
     for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), keys_to_atoms(val)}
